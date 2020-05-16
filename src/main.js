@@ -1,14 +1,24 @@
-import Vue from 'vue'
-import App from './App.vue'
+import Vue from "vue";
+import VueRouter from "vue-router";
+import App from "./App.vue";
+import routers from "./routers";
 
 import "./assets/css/md.css";
-import "./assets/css/article.css"
-import "./assets/css/realm-app.css"
+import "./assets/css/article.css";
+import "./assets/css/realm-app.css";
 
-import app from "./core/app.js"
+import app from "./core/app.js";
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
+
+Vue.use(VueRouter);
+
+const router = new VueRouter({
+  mode: "history",
+  routes: routers,
+});
 
 new Vue({
-	render: h => h(App),
-}).$mount('#app')
+  router,
+  render: (h) => h(App),
+}).$mount("#app");
