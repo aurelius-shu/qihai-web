@@ -26,7 +26,7 @@
                 aria-expanded="false"
               >Home</a>
               <div class="dropdown-menu" aria-labelledby="dropdown01">
-                <a class="dropdown-item" href="home-onecolumn.html">One column</a>
+                <a class="dropdown-item" @click="edit">写文章</a>
                 <a class="dropdown-item" href="home-twocolumn.html">Two column</a>
                 <a class="dropdown-item" href="home-threecolumn.html">Three column</a>
                 <a class="dropdown-item" href="home-fourcolumn.html">Four column</a>
@@ -99,10 +99,15 @@
 
 <script>
 export default {
-  name: "Header"
+  name: "Header",
   // props: {
   // 	msg: String
-  // }
+  // },
+  methods: {
+    edit() {
+      this.$router.push("/editor");
+    }
+  }
 };
 </script>
 
