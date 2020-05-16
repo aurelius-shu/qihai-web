@@ -1,4 +1,5 @@
-import Details from "./components/realm/Details.vue";
+import Details from "./components/realm/Details";
+import Editor from "./components/realm/Editor";
 
 const routers = [
   {
@@ -9,6 +10,11 @@ const routers = [
     path: "/details",
     name: "details",
     component: Details,
+  },
+  {
+    path: "/editor",
+    name: "editor",
+    component: Editor,
   },
 ];
 export default routers;
