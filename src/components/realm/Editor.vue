@@ -1,7 +1,7 @@
 <template>
   <div class="layout-editor">
     <div class="layout-edit-title">
-      <a class="btn-goback" title="文章管理">
+      <a class="btn-goback" @click="columns" title="文章管理">
         <svg
           class="bi bi-caret-left"
           width="26px"
@@ -44,6 +44,9 @@ export default {
   methods: {
     updateText(text) {
       this.inputText = text;
+    },
+    columns() {
+      this.$router.push("/columns");
     }
   }
 };

@@ -16,7 +16,7 @@
 
         <div class="collapse navbar-collapse order-3 order-md-2" id="navbar-left">
           <ul class="navbar-nav mr-auto">
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown active">
               <a
                 class="nav-link dropdown-toggle"
                 href="#"
@@ -24,8 +24,9 @@
                 data-toggle="dropdown"
                 aria-haspopup="true"
                 aria-expanded="false"
-              >Home</a>
+              >技术分享</a>
               <div class="dropdown-menu" aria-labelledby="dropdown01">
+                <a class="dropdown-item" @click="columns">数据分析</a>
                 <a class="dropdown-item" @click="edit">写文章</a>
                 <a class="dropdown-item" href="home-twocolumn.html">Two column</a>
                 <a class="dropdown-item" href="home-threecolumn.html">Three column</a>
@@ -106,6 +107,9 @@ export default {
   methods: {
     edit() {
       this.$router.push("/editor");
+    },
+    columns() {
+      this.$router.push("/columns");
     }
   }
 };

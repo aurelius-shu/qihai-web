@@ -1,7 +1,7 @@
 <template>
-  <div id="details">
+  <div id="columns">
     <Header></Header>
-    <DetailsMain></DetailsMain>
+    <ColumnsMain></ColumnsMain>
     <SiteNewsLetter></SiteNewsLetter>
     <SiteInstagram></SiteInstagram>
     <Footer></Footer>
@@ -10,16 +10,16 @@
 
 <script>
 import Header from "./Header";
-import DetailsMain from "./DetailsMain";
+import ColumnsMain from "./ColumnsMain";
 import SiteNewsLetter from "./SiteNewsLetter";
 import SiteInstagram from "./SiteInstagram";
 import Footer from "./Footer";
 
 export default {
-  name: "Details",
+  name: "Columns",
   components: {
     Header,
-    DetailsMain,
+    ColumnsMain,
     SiteNewsLetter,
     SiteInstagram,
     Footer

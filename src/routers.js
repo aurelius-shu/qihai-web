@@ -1,3 +1,4 @@
+import Columns from "./components/realm/Columns";
 import Details from "./components/realm/Details";
 import Editor from "./components/realm/Editor";
 
@@ -5,6 +6,11 @@ const routers = [
   {
     path: "/",
     component: Details,
+  },
+  {
+    path: "/columns",
+    name: "columns",
+    component: Columns,
   },
   {
     path: "/details",
