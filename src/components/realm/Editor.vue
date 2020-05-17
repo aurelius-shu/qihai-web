@@ -1,10 +1,10 @@
 <template>
   <div class="layout-editor">
     <div class="layout-edit-title">
-      <a title="文章管理" class="btn-goback" style="cursor:pointer">
+      <a class="btn-goback" title="文章管理">
         <svg
           class="bi bi-caret-left"
-          width="32px"
+          width="26px"
           viewBox="0 0 16 16"
           fill="currentColor"
           xmlns="http://www.w3.org/2000/svg"
@@ -24,7 +24,7 @@
       <button class="btn btn-secondary">发布文章</button>
     </div>
 
-    <Markdown style="height: 100%" :input="inputText" @updateText="updateText"></Markdown>
+    <Markdown :input="inputText" @updateText="updateText"></Markdown>
   </div>
 </template>
 
@@ -65,6 +65,11 @@ export default {
   align-items: center;
   box-sizing: border-box;
   border-radius: 4px;
+}
+
+.btn-goback {
+  margin-left: 10px;
+  cursor: pointer;
 }
 
 .article-title-input-box {
