@@ -6,8 +6,6 @@
 </template>
 
 <script>
-import Header from "./components/realm/Header";
-
 export default {
   name: "app",
   components: {}
