@@ -4,7 +4,7 @@
       <textarea :value="input" @input="update"></textarea>
     </div>
     <div class="tool-bar">
-      <a title="上传图片">
+      <a title="上传图片" @click="upload_img">
         <svg
           class="bi bi-card-image"
           width="1em"
@@ -56,7 +56,8 @@ export default {
     update: _.debounce(function(e) {
       this.inputText = e.target.value;
       this.$emit("updateText", this.inputText);
-    }, 300)
+    }, 300),
+    upload_img() {}
   }
 };
 </script>

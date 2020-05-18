@@ -14,7 +14,7 @@
               <h4 class="card-title">How can we sing about love?</h4>
             </a>
           </header>
-          <a href="post-image.html">
+          <a @click="details" href="#">
             <img class="card-img" src="../../assets/images/articles/22.jpg" alt />
           </a>
           <div class="card-body">
@@ -148,7 +148,12 @@
 <script>
 export default {
   name: "ColumnsContent",
-  props: {}
+  props: {},
+  methods: {
+    details() {
+      this.$router.push("/details");
+    }
+  }
 };
 </script>
 
