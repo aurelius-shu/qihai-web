@@ -5,7 +5,7 @@ import Editor from "./components/realm/Editor";
 const routers = [
   {
     path: "/",
-    component: Details,
+    component: Columns,
   },
   {
     path: "/columns",
