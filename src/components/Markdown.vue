@@ -4,7 +4,7 @@
       <textarea :value="input" @input="update"></textarea>
     </div>
     <div class="tool-bar">
-      <a title="上传图片" @click="upload_img">
+      <a title="图片" data-toggle="modal" data-target="#exampleModalLong">
         <svg
           class="bi bi-card-image"
           width="1em"
@@ -30,12 +30,15 @@
       </a>
     </div>
     <div class="md-html" v-html="compiledMarkdown"></div>
+    <ImageModal></ImageModal>
   </div>
 </template>
 
 <script>
 import lodash from "lodash";
 import marked from "marked";
+import $ from "jquery";
+import ImageModal from "./ImageModal";
 
 export default {
   name: "Markdown",
@@ -47,6 +50,9 @@ export default {
       inputText: this.input
     };
   },
+  components: {
+    ImageModal
+  },
   computed: {
     compiledMarkdown: function() {
       return marked(this.inputText, { sanitize: true });
@@ -57,7 +63,9 @@ export default {
       this.inputText = e.target.value;
       this.$emit("updateText", this.inputText);
     }, 300),
-    upload_img() {}
+    upload_img() {
+      $("#exampleModal").modal(options);
+    }
   }
 };
 </script>
