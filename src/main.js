@@ -6,12 +6,16 @@ import routers from "./routers";
 import "./assets/css/article.css";
 import "./assets/css/realm-app.css";
 
-
 import app from "./core/app.js";
 
 Vue.config.productionTip = false;
 
 Vue.use(VueRouter);
+
+Vue.prototype.$http = axios;
+
+axios.defaults.headers.post["Content-Type"] =
+  "application/x-www-fromurlencodeed";
 
 const router = new VueRouter({
   mode: "history",

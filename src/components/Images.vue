@@ -1,12 +1,14 @@
 <template>
   <div>
+    <!-- action="https://www.mocky.io/v2/5cc8019d300000980a055e76" -->
     <a-upload
-      action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+      :action="uploadImageAction"
       list-type="picture"
       :default-file-list="fileList"
+      @change="handleUploadChange"
     >
       <a-button>
-        <a-icon type="upload" />upload
+        <a-icon type="upload" />上传图片
       </a-button>
     </a-upload>
     <br />
@@ -24,27 +26,43 @@ export default {
   name: "Images",
   data() {
     return {
-      fileList: [
-        {
-          uid: "-1",
-          name: "xxx.png",
-          status: "done",
-          url:
-            "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-          thumbUrl:
-            "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
-        },
-        {
-          uid: "-2",
-          name: "yyy.png",
-          status: "done",
-          url:
-            "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-          thumbUrl:
-            "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
-        }
-      ]
+      uploadImageAction: "http://127.0.0.1:8000/realm/upload/image",
+      fileList: []
     };
+  },
+  beforeMount() {
+    this.fileList = [
+      {
+        uid: "-1",
+        name: "xxx.png",
+        status: "done",
+        url:
+          "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
+        thumbUrl:
+          "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+      },
+      {
+        uid: "-2",
+        name: "yyy.png",
+        status: "done",
+        url:
+          "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
+        thumbUrl:
+          "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+      }
+    ];
+  },
+  mounted() {
+    // this.$http.defaults.baseURL = "http://127.0.0.1:8000/realm/";
+  },
+  methods: {
+    handleUploadChange(info) {
+      if (info.file.status === "uploading") {
+        return;
+      }
+      if (info.file.status === "done") {
+      }
+    }
   }
 };
 </script>
