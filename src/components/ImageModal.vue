@@ -39,7 +39,7 @@ export default {
 </script>
 
 <style >
-#exampleModalLong {
+.modal-dialog .modal-content {
   border-radius: 4px;
 }
 

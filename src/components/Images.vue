@@ -15,10 +15,10 @@
 
 <script>
 import Vue from "vue";
-import Antd from "ant-design-vue";
+import Upload from "ant-design-vue";
 import "ant-design-vue/dist/antd.css";
 
-Vue.use(Antd);
+Vue.use(Upload);
 
 export default {
   name: "Images",
