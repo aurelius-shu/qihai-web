@@ -34,7 +34,12 @@ export default {
       fileList: []
     };
   },
-  beforeMount() {
+  async beforeMount() {
+    const images = await this.getImages(this.upload_info.upload_user);
+
+    // for (i = 0; i < images.length; i++) {
+    //   image = images[i];
+    // }
     this.fileList = [
       {
         uid: "-1",
@@ -56,9 +61,9 @@ export default {
       }
     ];
   },
-  mounted() {
-    // this.$http.defaults.baseURL = "http://127.0.0.1:8000/realm/";
-  },
+  // mounted() {
+  //   // this.$http.defaults.baseURL = "http://127.0.0.1:8000/realm/";
+  // },
   methods: {
     handleUploadChange(info) {
       if (info.file.status === "uploading") {
@@ -86,6 +91,10 @@ export default {
       return new Promise(resolve => {
         setTimeout(resolve, ms);
       });
+    },
+    getImages(username) {
+      this.$http.defaults.baseURL = "http://127.0.0.1:8000/realm/";
+      return this.$http.get(`/${username}/images`);
     }
   }
 };
