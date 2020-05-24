@@ -1,13 +1,14 @@
 <template>
   <div>
     <!-- action="https://www.mocky.io/v2/5cc8019d300000980a055e76" -->
+
     <a-upload
       :action="uploadImageAction"
       :beforeUpload="beforeUpload"
       :data="upload_info"
+      :defaultFileList="fileList"
+      @change="handleChange"
       list-type="picture"
-      :default-file-list="fileList"
-      @change="handleUploadChange"
     >
       <a-button>
         <a-icon type="upload" />上传图片
@@ -36,40 +37,38 @@ export default {
   },
   async beforeMount() {
     const images = await this.getImages(this.upload_info.upload_user);
+    const baseUrl = "http://127.0.0.1:8000";
 
-    // for (i = 0; i < images.length; i++) {
-    //   image = images[i];
-    // }
-    this.fileList = [
-      {
-        uid: "-1",
-        name: "xxx.png",
+    for (let i = 0; i < images.data.length; i++) {
+      let image = images.data[i];
+      this.fileList.push({
+        uid: image.uid,
+        name: image.name,
         status: "done",
-        url:
-          "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-        thumbUrl:
-          "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
-      },
-      {
-        uid: "-2",
-        name: "yyy.png",
-        status: "done",
-        url:
-          "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-        thumbUrl:
-          "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
-      }
-    ];
+        url: `${baseUrl}${image.url}`,
+        thumbUrl: `${baseUrl}${image.url}`
+      });
+    }
   },
-  // mounted() {
-  //   // this.$http.defaults.baseURL = "http://127.0.0.1:8000/realm/";
-  // },
   methods: {
-    handleUploadChange(info) {
-      if (info.file.status === "uploading") {
-        return;
-      }
+    showMessage(type, message, description, duration = 3) {
+      this.$notification[type]({
+        message: message,
+        description: description,
+        duration: duration
+      });
+    },
+    handleChange(info) {
       if (info.file.status === "done") {
+        if (!info.file.response.is_succeed) {
+          info.fileList.pop();
+          this.showMessage("warning", "警告", info.file.response.message);
+        } else {
+          this.showMessage("info", "提示", info.file.response.message);
+        }
+      }
+      if (info.file.status === "error") {
+        this.showMessage("error", "错误", info.file.response);
       }
     },
     beforeUpload(file) {
