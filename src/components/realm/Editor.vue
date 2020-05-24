@@ -70,9 +70,21 @@ export default {
       if (saveResult.data.is_succeed) {
         this.$utils.showSuccessMessage.call(this, saveResult.data.message);
         this.aid = saveResult.data.aid;
+      } else {
+        this.$utils.showErrorMessage.call(this, saveResult.data.message);
       }
     },
-    publishArticle() {}
+    async publishArticle() {
+      this.$http.defaults.baseURL = this.baseUrl;
+      const publishResult = await this.$http.get(
+        `/realm/${this.user}/articles/publish/${this.aid}`
+      );
+      if (publishResult.data.is_succeed) {
+        this.$utils.showSuccessMessage.call(this, publishResult.data.message);
+      } else {
+        this.$utils.showErrorMessage.call(this, publishResult.data.message);
+      }
+    }
   }
 };
 </script>
