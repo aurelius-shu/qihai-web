@@ -1,7 +1,14 @@
 <template>
   <div id="columns">
     <Header></Header>
-    <ColumnsMain></ColumnsMain>
+    <main class="main pt-4">
+      <div class="container">
+        <div class="row">
+          <ColumnsContent></ColumnsContent>
+          <Aside></Aside>
+        </div>
+      </div>
+    </main>
     <SiteNewsLetter></SiteNewsLetter>
     <SiteInstagram></SiteInstagram>
     <Footer></Footer>
@@ -10,7 +17,8 @@
 
 <script>
 import Header from "./Header";
-import ColumnsMain from "./ColumnsMain";
+import ColumnsContent from "./ColumnsContent";
+import Aside from "./Aside";
 import SiteNewsLetter from "./SiteNewsLetter";
 import SiteInstagram from "./SiteInstagram";
 import Footer from "./Footer";
@@ -19,7 +27,8 @@ export default {
   name: "Columns",
   components: {
     Header,
-    ColumnsMain,
+    ColumnsContent,
+    Aside,
     SiteNewsLetter,
     SiteInstagram,
     Footer

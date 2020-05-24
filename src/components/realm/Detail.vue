@@ -1,5 +1,5 @@
 <template>
-  <div id="details">
+  <div id="detail">
     <Header></Header>
     <main class="main pt-4">
       <div class="container">
@@ -24,7 +24,7 @@ import SiteInstagram from "./SiteInstagram";
 import Footer from "./Footer";
 
 export default {
-  name: "Details",
+  name: "Detail",
   components: {
     Header,
     Article,

@@ -1,5 +1,5 @@
 import Columns from "./components/realm/Columns";
-import Details from "./components/realm/Details";
+import Detail from "./components/realm/Detail";
 import Editor from "./components/realm/Editor";
 
 const routers = [
@@ -13,9 +13,9 @@ const routers = [
     component: Columns,
   },
   {
-    path: "/details",
-    name: "details",
-    component: Details,
+    path: "/detail/:aid",
+    name: "detail",
+    component: Detail,
   },
   {
     path: "/editor",
@@ -23,4 +23,5 @@ const routers = [
     component: Editor,
   },
 ];
+
 export default routers;
