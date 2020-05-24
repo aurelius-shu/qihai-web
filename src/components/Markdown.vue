@@ -4,7 +4,7 @@
       <textarea :value="input" @input="update"></textarea>
     </div>
     <div class="tool-bar">
-      <a title="图片" data-toggle="modal" data-target="#exampleModalLong">
+      <a title="图片" data-toggle="modal" data-target="#imageModalLong">
         <svg
           class="bi bi-card-image"
           width="1em"
@@ -62,10 +62,7 @@ export default {
     update: _.debounce(function(e) {
       this.inputText = e.target.value;
       this.$emit("updateText", this.inputText);
-    }, 300),
-    upload_img() {
-      $("#exampleModal").modal(options);
-    }
+    }, 300)
   }
 };
 </script>
