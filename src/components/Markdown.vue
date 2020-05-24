@@ -106,7 +106,7 @@ textarea {
   padding: 20px;
 }
 
-.md-html {
+#editor .md-html {
   float: right;
   font-size: 13pt;
   width: 48%;

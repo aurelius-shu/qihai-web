@@ -4,85 +4,19 @@
       <header class="card-header text-center">
         <div class="card-meta">
           <a href="#">
-            <time class="timeago" datetime="2019-10-26 20:00" timeago-id="1">6 months ago</time>
+            <time class="timeago" :datetime="createTime" timeago-id="1">{{ timeage }}</time>
           </a> in
-          <a href="page-category.html">Journey</a>
+          <a href="#">{{ address }}</a>
         </div>
-        <a href="post-image.html">
-          <h1 class="card-title">How can we sing about love?</h1>
+        <a href="#">
+          <h1 class="card-title">{{ title }}</h1>
         </a>
       </header>
-      <a href="post-image.html">
-        <img class="card-img" src="../../assets/images/articles/1.jpg" alt />
+      <a href="#">
+        <img class="card-img" :src="image" alt />
       </a>
       <div class="card-body">
-        <p>
-          Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.
-          Cum sociis natoque
-          <a href="#">penatibus</a> et magnis dis parturient montes, nascetur ridiculus mus. Donec
-          quam felis, ultricies nec, pellentesque eu,
-          <strong>pretium quis, sem.</strong>
-        </p>
-
-        <p>
-          Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim
-          justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer
-          tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula,
-          porttitor eu, consequat vitae, eleifend ac, enim.
-        </p>
-
-        <p>
-          <strong>Aliquam lorem ante</strong>, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut
-          metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper
-          ultricies nisi. Nam eget dui.
-          <strong>Etiam rhoncus</strong>. Maecenas tempus, tellus eget condimentum
-          rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus
-          pulvinar, hendrerit id, lorem. Maecenas nec odio et ante
-          <a href="#">tincidunt tempus</a>.
-        </p>
-
-        <blockquote>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-        </blockquote>
-
-        <p>
-          Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.
-          Cum sociis natoque penatibus et magnis dis parturient montes,
-          <a href="#">nascetur ridiculus</a> mus. Donec
-          quam felis, ultricies nec, pellentesque eu,
-          <strong>pretium quis, sem.</strong>
-        </p>
-
-        <div class="row">
-          <div class="col-md-4">
-            <ul>
-              <li>Donec quam felis</li>
-              <li>Consectetuer adipiscing</li>
-            </ul>
-          </div>
-          <div class="col-md-4">
-            <ul>
-              <li>Donec quam felis</li>
-              <li>Consectetuer adipiscing</li>
-            </ul>
-          </div>
-          <div class="col-md-4">
-            <ul>
-              <li>Donec quam felis</li>
-              <li>Consectetuer adipiscing</li>
-            </ul>
-          </div>
-        </div>
-
-        <p>
-          Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius
-          laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies
-          nisi. Nam eget dui.
-          <strong>Etiam rhoncus</strong>. Maecenas tempus, tellus eget condimentum rhoncus, sem quam
-          semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit
-          id, lorem. Maecenas nec odio et ante
-          <a href="#">tincidunt tempus</a>.
-        </p>
+        <div class="md-html" v-html="compiledMarkdown"></div>
 
         <hr />
 
@@ -282,9 +216,49 @@
 </template>
 
 <script>
+import marked from "marked";
+
 export default {
   name: "Article",
-  props: {}
+  data: function() {
+    return {
+      baseUrl: "",
+      user: "aurelius",
+      aid: "1",
+
+      createTime: "",
+      timeage: "",
+      address: "",
+      title: "",
+      image: "",
+      content: ""
+    };
+  },
+  props: {},
+  computed: {
+    compiledMarkdown: function() {
+      return marked(this.content);
+    }
+  },
+  async beforeMount() {
+    this.baseUrl = "http://127.0.0.1:8000";
+
+    this.$http.defaults.baseURL = this.baseUrl;
+    const articleDetail = await this.$http.get(
+      `${this.baseUrl}/realm/${this.user}/articles/detail/${this.aid}`
+    );
+    if (articleDetail.data.is_succeed) {
+      this.createTime = articleDetail.data.data.createTime;
+      // this.timeage = articleDetail.data.data.
+      this.timeage = "3 days ago";
+      this.address = "深圳";
+      this.title = articleDetail.data.data.title;
+      this.image = `${this.baseUrl}${articleDetail.data.data.image}`;
+      this.content = articleDetail.data.data.content;
+    } else {
+      this.$utils.showErrorMessage.call(this, articleDetail.data);
+    }
+  }
 };
 </script>
 

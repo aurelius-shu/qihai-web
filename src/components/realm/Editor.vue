@@ -47,7 +47,7 @@ export default {
   },
   beforeMount() {
     this.baseUrl = "http://127.0.0.1:8000";
-    this.image_md5_key = "62b2873a2f06fa20c9a5714760048a64";
+    this.image_md5_key = "73831253f3d3521659d137b818535d1b";
   },
   methods: {
     updateText(text) {
@@ -81,6 +81,7 @@ export default {
       );
       if (publishResult.data.is_succeed) {
         this.$utils.showSuccessMessage.call(this, publishResult.data.message);
+        this.$router.push("/columns");
       } else {
         this.$utils.showErrorMessage.call(this, publishResult.data.message);
       }

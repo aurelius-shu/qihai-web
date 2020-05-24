@@ -1,7 +1,14 @@
 <template>
   <div id="details">
     <Header></Header>
-    <DetailsMain></DetailsMain>
+    <main class="main pt-4">
+      <div class="container">
+        <div class="row">
+          <Article></Article>
+          <Aside></Aside>
+        </div>
+      </div>
+    </main>
     <SiteNewsLetter></SiteNewsLetter>
     <SiteInstagram></SiteInstagram>
     <Footer></Footer>
@@ -10,7 +17,8 @@
 
 <script>
 import Header from "./Header";
-import DetailsMain from "./DetailsMain";
+import Article from "./Article";
+import Aside from "./Aside";
 import SiteNewsLetter from "./SiteNewsLetter";
 import SiteInstagram from "./SiteInstagram";
 import Footer from "./Footer";
@@ -19,7 +27,8 @@ export default {
   name: "Details",
   components: {
     Header,
-    DetailsMain,
+    Article,
+    Aside,
     SiteNewsLetter,
     SiteInstagram,
     Footer
