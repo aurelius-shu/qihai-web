@@ -17,11 +17,11 @@
         </svg>
       </a>
       <div class="article-title-input-box">
-        <input v-model="message" class="article-title-input" placeholder="输入文章标题" />
+        <input v-model="title" class="article-title-input" placeholder="输入文章标题" />
       </div>
 
-      <button class="btn btn-outline-dark">保存草稿</button>
-      <button class="btn btn-secondary">发布文章</button>
+      <button class="btn btn-outline-dark" @click="saveArticle">保存草稿</button>
+      <button class="btn btn-secondary" @click="publishArticle">发布文章</button>
     </div>
 
     <Markdown :input="inputText" @updateText="updateText"></Markdown>
@@ -37,9 +37,17 @@ export default {
   },
   data: function() {
     return {
-      message: "",
-      inputText: "# Hello"
+      baseUrl: "",
+      user: "aurelius",
+      aid: "1",
+      title: "",
+      inputText: "# Hello",
+      image_md5_key: ""
     };
+  },
+  beforeMount() {
+    this.baseUrl = "http://127.0.0.1:8000";
+    this.image_md5_key = "62b2873a2f06fa20c9a5714760048a64";
   },
   methods: {
     updateText(text) {
@@ -47,7 +55,24 @@ export default {
     },
     columns() {
       this.$router.push("/columns");
-    }
+    },
+    async saveArticle() {
+      this.$http.defaults.baseURL = this.baseUrl;
+      const saveResult = await this.$http.post(
+        `/realm/${this.user}/articles/save`,
+        {
+          aid: this.aid,
+          title: this.title,
+          content: this.inputText,
+          image_md5_key: this.image_md5_key
+        }
+      );
+      if (saveResult.data.is_succeed) {
+        this.$utils.showSuccessMessage.call(this, saveResult.data.message);
+        this.aid = saveResult.data.aid;
+      }
+    },
+    publishArticle() {}
   }
 };
 </script>

@@ -20,12 +20,7 @@
 </template>
 
 <script>
-import Vue from "vue";
-import Upload from "ant-design-vue";
-import "ant-design-vue/dist/antd.css";
 import md5 from "js-md5";
-
-Vue.use(Upload);
 
 export default {
   name: "Images",
@@ -54,24 +49,17 @@ export default {
     }
   },
   methods: {
-    showMessage(type, message, description, duration = 3) {
-      this.$notification[type]({
-        message: message,
-        description: description,
-        duration: duration
-      });
-    },
     handleChange(info) {
       if (info.file.status === "done") {
         if (!info.file.response.is_succeed) {
           info.fileList.pop();
-          this.showMessage("warning", "警告", info.file.response.message);
+          this.$utils.showWarningMessage.call(this, info.file.response.message);
         } else {
-          this.showMessage("info", "提示", info.file.response.message);
+          this.$utils.showInfoMessage.call(this, info.file.response.message);
         }
       }
       if (info.file.status === "error") {
-        this.showMessage("error", "错误", info.file.response);
+        this.$utils.showErrorMessage.call(this, info.file.response);
       }
     },
     beforeUpload(file) {
