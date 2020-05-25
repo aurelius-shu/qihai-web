@@ -19,12 +19,13 @@
     <aside class="sidebar sidebar-sticky">
       <div class="card mb-4">
         <div class="card-body">
-          <h4 class="card-title">Tags</h4>
-          <a class="btn btn-light btn-sm mb-1" href="page-category.html">Journey</a>
-          <a class="btn btn-light btn-sm mb-1" href="page-category.html">Work</a>
-          <a class="btn btn-light btn-sm mb-1" href="page-category.html">Lifestype</a>
-          <a class="btn btn-light btn-sm mb-1" href="page-category.html">Photography</a>
-          <a class="btn btn-light btn-sm mb-1" href="page-category.html">Food &amp; Drinks</a>
+          <h4 class="card-title">专栏</h4>
+          <a
+            class="btn btn-light btn-sm mb-1"
+            v-for="column in columns"
+            :key="column.id"
+            @click="goColumn(column.id)"
+          >{{ column.name }}</a>
         </div>
       </div>
       <!-- /.card -->
@@ -54,7 +55,26 @@
 <script>
 export default {
   name: "Aside",
-  props: {}
+  props: {},
+  data: function() {
+    return {
+      baseUrl: "",
+      user: "aurelius",
+      columns: []
+    };
+  },
+  async beforeMount() {
+    this.baseUrl = "http://127.0.0.1:8000";
+
+    this.$http.defaults.baseURL = this.baseUrl;
+    const columnsResult = await this.$http.get("/realm/columns");
+    this.columns = columnsResult.data;
+  },
+  methods: {
+    goColumn(key) {
+      console.log(key);
+    }
+  }
 };
 </script>
 
