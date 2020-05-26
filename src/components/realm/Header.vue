@@ -45,7 +45,7 @@
               >后台</a>
               <div class="dropdown-menu" aria-labelledby="dropdown02">
                 <a class="dropdown-item" @click="manage_articles">管理文章</a>
-                <a class="dropdown-item" @click="edit">编辑文章</a>
+                <a class="dropdown-item" @click="edit(0)">编辑文章</a>
                 <a class="dropdown-item" href="post-image.html">Image</a>
                 <a class="dropdown-item" href="post-video.html">Video</a>
               </div>
@@ -119,11 +119,11 @@ export default {
     this.columns = columnsResult.data;
   },
   methods: {
-    manage_articles(){
-
+    manage_articles() {
+      this.$router.push(`/${this.user}/article/manage`);
     },
-    edit() {
-      this.$router.push(`/${this.user}/editor/0`);
+    edit(aid) {
+      this.$router.push(`/${this.user}/editor/${aid}`);
     },
     goColumn(cid) {
       this.$router.push(`/${this.user}/column/${cid}`);

@@ -1,7 +1,7 @@
 <template>
   <div class="layout-editor">
     <div class="layout-edit-title">
-      <a class="btn-goback" @click="goColumn" title="文章管理">
+      <a class="btn-goback" @click="manage_articles" title="文章管理">
         <svg
           class="bi bi-caret-left"
           width="26px"
@@ -53,8 +53,8 @@ export default {
     updateText(text) {
       this.inputText = text;
     },
-    goColumn() {
-      this.$router.push(`/${this.user}/column/0`);
+    manage_articles() {
+      this.$router.push(`/${this.user}/article/manage`);
     },
     async saveArticle() {
       this.$http.defaults.baseURL = this.baseUrl;
