@@ -42,9 +42,10 @@
                 data-toggle="dropdown"
                 aria-haspopup="true"
                 aria-expanded="false"
-              >文字管理</a>
+              >后台</a>
               <div class="dropdown-menu" aria-labelledby="dropdown02">
-                <a class="dropdown-item" @click="edit">写文章</a>
+                <a class="dropdown-item" @click="manage_articles">管理文章</a>
+                <a class="dropdown-item" @click="edit">编辑文章</a>
                 <a class="dropdown-item" href="post-image.html">Image</a>
                 <a class="dropdown-item" href="post-video.html">Video</a>
               </div>
@@ -118,6 +119,9 @@ export default {
     this.columns = columnsResult.data;
   },
   methods: {
+    manage_articles(){
+
+    },
     edit() {
       this.$router.push(`/${this.user}/editor/0`);
     },

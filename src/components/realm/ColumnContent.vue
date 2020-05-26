@@ -2,144 +2,54 @@
   <div class="col-md-9">
     <div class="row">
       <div class="col-md-6">
-        <article class="card mb-4">
+        <article class="card mb-4" v-for="article in articles_left" :key="article.id">
           <header class="card-header">
             <div class="card-meta">
-              <a href="#">
-                <time class="timeago" datetime="2019-10-26 20:00" timeago-id="1">6 months ago</time>
+              <a href>
+                <time
+                  class="timeago"
+                  :datetime="article.publish_time"
+                  :timeago-id="article.id"
+                >6 months ago</time>
               </a> in
-              <a href="page-category.html">Journey</a>
+              <a href>{{ article.column }}</a>
             </div>
-            <a href="post-image.html">
-              <h4 class="card-title">How can we sing about love?</h4>
+            <a href>
+              <h4 class="card-title">{{ article.title }}</h4>
             </a>
           </header>
-          <a @click="goArticle(1)" href>
-            <img class="card-img" src="../../assets/images/articles/22.jpg" alt />
+          <a @click="goArticle(article.id)" href>
+            <img class="card-img" :src="baseUrl+article.image" alt />
           </a>
           <div class="card-body">
-            <p
-              class="card-text"
-            >Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum.</p>
+            <p class="card-text">{{ article.comment }}</p>
           </div>
         </article>
-        <!-- /.card -->
-
-        <article class="card mb-4">
-          <header class="card-header">
-            <div class="card-meta">
-              <a href="#">
-                <time class="timeago" datetime="2019-10-03 20:00" timeago-id="2">7 months ago</time>
-              </a> in
-              <a href="page-category.html">Lifestyle</a>
-            </div>
-            <a href="post-image.html">
-              <h4 class="card-title">Oh, I guess they have the blues</h4>
-            </a>
-          </header>
-          <a href="post-image.html">
-            <img class="card-img" src="../../assets/images/articles/18.jpg" alt />
-          </a>
-          <div class="card-body">
-            <p
-              class="card-text"
-            >Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum.</p>
-          </div>
-        </article>
-        <!-- /.card -->
-
-        <article class="card mb-4">
-          <header class="card-header">
-            <div class="card-meta">
-              <a href="#">
-                <time class="timeago" datetime="2019-07-16 20:00" timeago-id="3">10 months ago</time>
-              </a> in
-              <a href="page-category.html">Work</a>
-            </div>
-            <a href="post-image.html">
-              <h4 class="card-title">How can we, how can we sing about ourselves?</h4>
-            </a>
-          </header>
-          <a href="post-image.html">
-            <img class="card-img" src="../../assets/images/articles/12.jpg" alt />
-          </a>
-          <div class="card-body">
-            <p
-              class="card-text"
-            >Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum.</p>
-          </div>
-        </article>
-        <!-- /.card -->
       </div>
       <div class="col-md-6">
-        <article class="card mb-4">
+        <article class="card mb-4" v-for="article in articles_right" :key="article.id">
           <header class="card-header">
             <div class="card-meta">
-              <a href="#">
-                <time class="timeago" datetime="2019-10-15 20:00" timeago-id="4">7 months ago</time>
+              <a href>
+                <time
+                  class="timeago"
+                  :datetime="article.publish_time"
+                  :timeago-id="article.id"
+                >6 months ago</time>
               </a> in
-              <a href="page-category.html">Lifestyle</a>
+              <a href>{{ article.column }}</a>
             </div>
-            <a href="post-image.html">
-              <h4 class="card-title">The king is made of paper</h4>
+            <a href>
+              <h4 class="card-title">{{ article.title }}</h4>
             </a>
           </header>
-          <a href="post-image.html">
-            <img class="card-img" src="../../assets/images/articles/5.jpg" alt />
+          <a @click="goArticle(article.id)" href>
+            <img class="card-img" :src="baseUrl+article.image" alt />
           </a>
           <div class="card-body">
-            <p
-              class="card-text"
-            >Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum.</p>
+            <p class="card-text">{{ article.comment }}</p>
           </div>
         </article>
-        <!-- /.card -->
-
-        <article class="card mb-4">
-          <header class="card-header">
-            <div class="card-meta">
-              <a href="#">
-                <time class="timeago" datetime="2019-08-24 20:00" timeago-id="5">8 months ago</time>
-              </a> in
-              <a href="page-category.html">Work</a>
-            </div>
-            <a href="post-image.html">
-              <h4 class="card-title">Crying on the news</h4>
-            </a>
-          </header>
-          <a href="post-image.html">
-            <img class="card-img" src="../../assets/images/articles/13.jpg" alt />
-          </a>
-          <div class="card-body">
-            <p
-              class="card-text"
-            >Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum.</p>
-          </div>
-        </article>
-        <!-- /.card -->
-
-        <article class="card mb-4">
-          <header class="card-header">
-            <div class="card-meta">
-              <a href="#">
-                <time class="timeago" datetime="2019-05-08 20:00" timeago-id="6">1 year ago</time>
-              </a> in
-              <a href="page-category.html">Journey</a>
-            </div>
-            <a href="post-image.html">
-              <h4 class="card-title">How can you not sing about love?</h4>
-            </a>
-          </header>
-          <a href="post-image.html">
-            <img class="card-img" src="../../assets/images/articles/1.jpg" alt />
-          </a>
-          <div class="card-body">
-            <p
-              class="card-text"
-            >Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum.</p>
-          </div>
-        </article>
-        <!-- /.card -->
       </div>
     </div>
   </div>
@@ -151,8 +61,24 @@ export default {
   props: {},
   data: function() {
     return {
-      user: this.$route.params.username
+      baseUrl: "http://localhost:8000",
+      user: this.$route.params.username,
+      cid: this.$route.params.cid,
+      imageUrl: "",
+      articles_left: [],
+      articles_right: []
     };
+  },
+  async beforeMount() {
+    this.$http.defaults.baseURL = this.baseUrl;
+    const articlesResult = await this.$http.get(`/realm/${this.user}/articles/${this.cid}`);
+    for (let i = 0; i < articlesResult.data.length; i++) {
+      if (i % 2 === 0) {
+        this.articles_left.push(articlesResult.data[i]);
+      } else {
+        this.articles_right.push(articlesResult.data[i]);
+      }
+    }
   },
   methods: {
     goArticle(aid) {

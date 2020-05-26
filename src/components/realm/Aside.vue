@@ -72,11 +72,14 @@ export default {
   },
   methods: {
     goColumn(key) {
-      console.log(key);
+      this.$router.push(`/${this.user}/column/${key}`);
     }
   }
 };
 </script>
 
 <style>
+.card-body .mb-1 {
+  margin-left: 0.25rem;
+}
 </style>
