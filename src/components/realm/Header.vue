@@ -24,15 +24,14 @@
                 data-toggle="dropdown"
                 aria-haspopup="true"
                 aria-expanded="false"
-              >技术分享</a>
+              >专栏</a>
               <div class="dropdown-menu" aria-labelledby="dropdown01">
-                <a class="dropdown-item" @click="columns">数据分析</a>
-                <a class="dropdown-item" @click="edit">写文章</a>
-                <a class="dropdown-item" href="home-twocolumn.html">Two column</a>
-                <a class="dropdown-item" href="home-threecolumn.html">Three column</a>
-                <a class="dropdown-item" href="home-fourcolumn.html">Four column</a>
-                <a class="dropdown-item" href="home-featured.html">Featured posts</a>
-                <a class="dropdown-item" href="home-fullwidth.html">Full width</a>
+                <a
+                  class="dropdown-item"
+                  v-for="column in columns"
+                  @click="goColumn(column.id)"
+                  :key="column.id"
+                >{{ column.name }}</a>
               </div>
             </li>
             <li class="nav-item dropdown active">
@@ -43,8 +42,9 @@
                 data-toggle="dropdown"
                 aria-haspopup="true"
                 aria-expanded="false"
-              >Posts</a>
+              >文字管理</a>
               <div class="dropdown-menu" aria-labelledby="dropdown02">
+                <a class="dropdown-item" @click="edit">写文章</a>
                 <a class="dropdown-item" href="post-image.html">Image</a>
                 <a class="dropdown-item" href="post-video.html">Video</a>
               </div>
@@ -104,16 +104,28 @@ export default {
   // props: {
   // 	msg: String
   // },
+  data: function() {
+    return {
+      baseUrl: "",
+      user: this.$route.params.username,
+      columns: []
+    };
+  },
+  async beforeMount() {
+    this.baseUrl = "http://localhost:8000";
+    this.$http.defaults.baseURL = this.baseUrl;
+    const columnsResult = await this.$http.get(`/realm/${this.user}/columns`);
+    this.columns = columnsResult.data;
+  },
   methods: {
     edit() {
-      this.$router.push("/editor");
+      this.$router.push(`/${this.user}/editor/0`);
     },
-    columns() {
-      this.$router.push("/columns");
+    goColumn(cid) {
+      this.$router.push(`/${this.user}/column/${cid}`);
     }
   }
 };
 </script>
 
-<style>
-</style>
+<style></style>

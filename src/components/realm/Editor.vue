@@ -1,7 +1,7 @@
 <template>
   <div class="layout-editor">
     <div class="layout-edit-title">
-      <a class="btn-goback" @click="columns" title="文章管理">
+      <a class="btn-goback" @click="goColumn" title="文章管理">
         <svg
           class="bi bi-caret-left"
           width="26px"
@@ -38,7 +38,7 @@ export default {
   data: function() {
     return {
       baseUrl: "",
-      user: "aurelius",
+      user: this.$route.params.username,
       aid: "1",
       title: "",
       inputText: "# Hello",
@@ -53,8 +53,8 @@ export default {
     updateText(text) {
       this.inputText = text;
     },
-    columns() {
-      this.$router.push("/columns");
+    goColumn() {
+      this.$router.push(`/${this.user}/column/0`);
     },
     async saveArticle() {
       this.$http.defaults.baseURL = this.baseUrl;
@@ -81,7 +81,7 @@ export default {
       );
       if (publishResult.data.is_succeed) {
         this.$utils.showSuccessMessage.call(this, publishResult.data.message);
-        this.$router.push("/columns");
+        this.$router.push(`/${this.user}/column/0`);
       } else {
         this.$utils.showErrorMessage.call(this, publishResult.data.message);
       }

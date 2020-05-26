@@ -59,7 +59,7 @@ export default {
   data: function() {
     return {
       baseUrl: "",
-      user: "aurelius",
+      user: this.$route.params.username,
       columns: []
     };
   },
@@ -67,7 +67,7 @@ export default {
     this.baseUrl = "http://127.0.0.1:8000";
 
     this.$http.defaults.baseURL = this.baseUrl;
-    const columnsResult = await this.$http.get("/realm/columns");
+    const columnsResult = await this.$http.get(`/realm/${this.user}/columns`);
     this.columns = columnsResult.data;
   },
   methods: {

@@ -1,24 +1,25 @@
-import Columns from "./components/realm/Columns";
-import Detail from "./components/realm/Detail";
+import Column from "./components/realm/Column";
+import Article from "./components/realm/Article";
 import Editor from "./components/realm/Editor";
 
 const routers = [
   {
-    path: "/",
-    component: Columns,
+    path: "/:username",
+    name: "index",
+    component: Column,
   },
   {
-    path: "/columns",
-    name: "columns",
-    component: Columns,
+    path: "/:username/column/:cid",
+    name: "column",
+    component: Column,
   },
   {
-    path: "/detail/:aid",
-    name: "detail",
-    component: Detail,
+    path: "/:username/article/:aid",
+    name: "article",
+    component: Article,
   },
   {
-    path: "/editor",
+    path: "/:username/editor/:aid",
     name: "editor",
     component: Editor,
   },

@@ -1,10 +1,10 @@
 <template>
-  <div id="detail">
+  <div id="columns">
     <Header></Header>
     <main class="main pt-4">
       <div class="container">
         <div class="row">
-          <Article></Article>
+          <ColumnContent></ColumnContent>
           <Aside></Aside>
         </div>
       </div>
@@ -17,17 +17,17 @@
 
 <script>
 import Header from "./Header";
-import Article from "./Article";
+import ColumnContent from "./ColumnContent";
 import Aside from "./Aside";
 import SiteNewsLetter from "./SiteNewsLetter";
 import SiteInstagram from "./SiteInstagram";
 import Footer from "./Footer";
 
 export default {
-  name: "Detail",
+  name: "Column",
   components: {
     Header,
-    Article,
+    ColumnContent,
     Aside,
     SiteNewsLetter,
     SiteInstagram,
