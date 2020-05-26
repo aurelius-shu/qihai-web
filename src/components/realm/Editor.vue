@@ -39,7 +39,7 @@ export default {
     return {
       baseUrl: "",
       user: this.$route.params.username,
-      aid: "1",
+      aid: this.$route.params.aid,
       title: "",
       inputText: "# Hello",
       image_md5_key: ""
