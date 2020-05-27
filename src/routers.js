@@ -4,11 +4,11 @@ import Article from "./components/realm/Article";
 import Editor from "./components/realm/Editor";
 
 const routers = [
-  {
-    path: "/:username",
-    name: "index",
-    component: Column,
-  },
+  // {
+  //   path: "/:username",
+  //   name: "index",
+  //   component: Column,
+  // },
   {
     path: "/:username/column/:cid",
     name: "column",

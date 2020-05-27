@@ -16,7 +16,7 @@
                   :disabled="!hasSelected"
                   :loading="loading"
                   @click="start"
-                >Reload</a-button>
+                >发布</a-button>
                 <span style="margin-left: 8px">
                   <template v-if="hasSelected">{{ `Selected ${selectedRowKeys.length} items` }}</template>
                 </span>
@@ -25,7 +25,15 @@
                 :row-selection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
                 :columns="columns"
                 :data-source="data"
-              />
+              >
+                <a-avatar slot="avatar" slot-scope="text" :src="text"></a-avatar>
+                <a 
+                  slot="name"
+                  slot-scope="text, record"
+                  @click="goArticle(record.key)"
+                  href
+                >{{ text }}</a>
+              </a-table>
             </div>
           </div>
         </article>
@@ -46,11 +54,15 @@ import Footer from "./Footer";
 const columns = [
   {
     title: "",
-    dataIndex: "image"
+    dataIndex: "avatar",
+    scopedSlots: {
+      customRender: "avatar"
+    }
   },
   {
     title: "标题",
-    dataIndex: "title"
+    dataIndex: "title",
+    scopedSlots: { customRender: "name" }
   },
   {
     title: "分类",
@@ -70,26 +82,35 @@ const columns = [
   }
 ];
 
-const data = [];
-for (let i = 0; i < 46; i++) {
-  data.push({
-    key: i,
-    image: "",
-    title: `Edward King ${i}`,
-    category: 32,
-    comment: `London, Park Lane no. ${i}`
-  });
-}
-
 export default {
   name: "ManageArticle",
   data() {
     return {
-      data,
+      baseUrl: "",
+      user: this.$route.params.username,
+      data: [],
       columns,
       selectedRowKeys: [], // Check here to configure the default column
       loading: false
     };
+  },
+  async mounted() {
+    this.baseUrl = "http://localhost:8000";
+    this.$http.defaults.baseURL = this.baseUrl;
+    const articlesResult = await this.$http.get(
+      `/realm/${this.user}/articles/0`
+    );
+    for (let i = 0; i < articlesResult.data.length; i++) {
+      this.data.push({
+        key: articlesResult.data[i].id,
+        avatar: `${this.baseUrl}${articlesResult.data[i].image}`,
+        title: articlesResult.data[i].title,
+        category: articlesResult.data[i].column,
+        comment: articlesResult.data[i].comment,
+        update_time: articlesResult.data[i].update_time,
+        publish_time: articlesResult.data[i].publish_time
+      });
+    }
   },
   computed: {
     hasSelected() {
@@ -106,8 +127,11 @@ export default {
       }, 1000);
     },
     onSelectChange(selectedRowKeys) {
-      console.log("selectedRowKeys changed: ", selectedRowKeys);
+      // console.log("selectedRowKeys changed: ", selectedRowKeys);
       this.selectedRowKeys = selectedRowKeys;
+    },
+    goArticle(article_id) {
+      this.$router.push(`/${this.user}/editor/${article_id}`);
     }
   },
   components: {
@@ -120,4 +144,5 @@ export default {
 </script>
 
 <style>
+
 </style>
