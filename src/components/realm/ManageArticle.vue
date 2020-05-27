@@ -45,16 +45,28 @@ import Footer from "./Footer";
 
 const columns = [
   {
-    title: "Name",
-    dataIndex: "name"
+    title: "",
+    dataIndex: "image"
   },
   {
-    title: "Age",
-    dataIndex: "age"
+    title: "标题",
+    dataIndex: "title"
   },
   {
-    title: "Address",
-    dataIndex: "address"
+    title: "分类",
+    dataIndex: "category"
+  },
+  {
+    title: "简介",
+    dataIndex: "comment"
+  },
+  {
+    title: "更新时间",
+    dataIndex: "update_time"
+  },
+  {
+    title: "发布时间",
+    dataIndex: "publish_time"
   }
 ];
 
@@ -62,9 +74,10 @@ const data = [];
 for (let i = 0; i < 46; i++) {
   data.push({
     key: i,
-    name: `Edward King ${i}`,
-    age: 32,
-    address: `London, Park Lane no. ${i}`
+    image: "",
+    title: `Edward King ${i}`,
+    category: 32,
+    comment: `London, Park Lane no. ${i}`
   });
 }
 

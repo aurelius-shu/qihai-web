@@ -93,6 +93,7 @@
               aria-label="Search"
             />
           </form>
+          <a-avatar :src="avatar" />
         </div>
       </div>
     </nav>
@@ -109,11 +110,13 @@ export default {
     return {
       baseUrl: "",
       user: this.$route.params.username,
+      avatar: "",
       columns: []
     };
   },
   async beforeMount() {
     this.baseUrl = "http://localhost:8000";
+    this.avatar = `${this.baseUrl}/media/realm/2d8bd71b96612e7caf4ee4d79a474b39.png`;
     this.$http.defaults.baseURL = this.baseUrl;
     const columnsResult = await this.$http.get(`/realm/${this.user}/columns`);
     this.columns = columnsResult.data;
