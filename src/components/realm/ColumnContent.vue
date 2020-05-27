@@ -63,7 +63,11 @@ export default {
     return {
       baseUrl: "http://localhost:8000",
       user: this.$route.params.username,
-      cid: this.$route.params.cid,
+      cid:
+        typeof this.$route.params.cid == "undefined" ||
+        this.$route.params.cid === null
+          ? 0
+          : this.$route.params.cid,
       imageUrl: "",
       articles_left: [],
       articles_right: []
@@ -71,7 +75,9 @@ export default {
   },
   async beforeMount() {
     this.$http.defaults.baseURL = this.baseUrl;
-    const articlesResult = await this.$http.get(`/realm/${this.user}/articles/${this.cid}`);
+    const articlesResult = await this.$http.get(
+      `/realm/${this.user}/articles/${this.cid}`
+    );
     for (let i = 0; i < articlesResult.data.length; i++) {
       if (i % 2 === 0) {
         this.articles_left.push(articlesResult.data[i]);
