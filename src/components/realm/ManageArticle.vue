@@ -3,40 +3,33 @@
     <Header></Header>
     <main class="main pt-4">
       <div class="container">
-        <article class="card card-outline mb-4">
-          <div class="card-body">
-            <header>
-              <h4 class="card-title">文章管理</h4>
-            </header>
+        <div class="card-body">
+          <header>
+            <h4 class="card-title">文章管理</h4>
+          </header>
 
-            <div>
-              <div style="margin-bottom: 16px">
-                <a-button
-                  type="primary"
-                  :disabled="!hasSelected"
-                  :loading="loading"
-                  @click="start"
-                >发布</a-button>
-                <span style="margin-left: 8px">
-                  <template v-if="hasSelected">{{ `Selected ${selectedRowKeys.length} items` }}</template>
-                </span>
-              </div>
-              <a-table
-                :row-selection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
-                :columns="columns"
-                :data-source="data"
-              >
-                <a-avatar slot="avatar" slot-scope="text" :src="text"></a-avatar>
-                <a 
-                  slot="name"
-                  slot-scope="text, record"
-                  @click="goArticle(record.key)"
-                  href
-                >{{ text }}</a>
-              </a-table>
+          <div>
+            <div style="margin-bottom: 16px">
+              <a-button type="primary" :disabled="!hasSelected" :loading="loading" @click="start">发布</a-button>
+              <span style="margin-left: 8px">
+                <template v-if="hasSelected">{{ `Selected ${selectedRowKeys.length} items` }}</template>
+              </span>
             </div>
+            <a-table
+              :row-selection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
+              :columns="columns"
+              :data-source="data"
+            >
+              <a-avatar slot="avatar" slot-scope="text" :src="text"></a-avatar>
+              <a
+                slot="name"
+                slot-scope="text, record"
+                @click="goArticle(record.key)"
+                href
+              >{{ text }}</a>
+            </a-table>
           </div>
-        </article>
+        </div>
       </div>
     </main>
     <SiteNewsLetter></SiteNewsLetter>
@@ -144,5 +137,4 @@ export default {
 </script>
 
 <style>
-
 </style>

@@ -11289,7 +11289,7 @@ label {
 }
 
 .card a:not(.btn) {
-	/* color: inherit; */
+	color: inherit;
 	text-decoration: none
 }
 
