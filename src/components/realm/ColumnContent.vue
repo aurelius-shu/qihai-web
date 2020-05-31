@@ -77,7 +77,10 @@ export default {
   },
   methods: {
     goArticle(article_id) {
-      this.$router.push(`/${this.user}/articles/${article_id}`);
+      this.$utils.router_push.call(
+        this,
+        `/${this.user}/articles/${article_id}`
+      );
     },
     async refreshArticles(page_index) {
       this.$http.defaults.baseURL = this.baseUrl;

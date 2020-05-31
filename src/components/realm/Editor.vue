@@ -53,7 +53,10 @@ export default {
       this.article_id = this.$route.params.article_id;
     }
 
-    await this.init_article(this.article_id);
+    if (this.article_id != 0) {
+      await this.init_article(this.article_id);
+    }
+
     // this.image_md5_key = "73831253f3d3521659d137b818535d1b";
   },
   methods: {
@@ -61,7 +64,7 @@ export default {
       this.article.content = text;
     },
     manage_articles() {
-      this.$router.push(`/${this.user}/manage/articles`);
+      this.$utils.router_push.call(this, `/${this.user}/manage/articles`);
     },
     async init_article(article_id) {
       this.$http.defaults.baseURL = this.baseUrl;
@@ -73,14 +76,15 @@ export default {
     async saveArticle() {
       this.$http.defaults.baseURL = this.baseUrl;
       const saveResult = await this.$http.post(
-        `/realm/${this.user}/articles/save`,
+        `/realm/${this.user}/manage/articles`,
         article
       );
       if (saveResult.data) {
-        this.$utils.showSuccessMessage.call(this, saveResult.data.message);
+        this.$utils.showSuccessMessage.call(this, saveResult.data);
         this.article_id = saveResult.data.article_id;
+        this.article.id = saveResult.data.article_id;
       } else {
-        this.$utils.showErrorMessage.call(this, saveResult.data.message);
+        this.$utils.showErrorMessage.call(this, saveResult.data);
       }
     },
     async publishArticle() {
@@ -89,10 +93,10 @@ export default {
         `/realm/${this.user}/manage/articles/${this.article_id}/publish`
       );
       if (publishResult.data) {
-        this.$utils.showSuccessMessage.call(this, publishResult.data.message);
-        this.$router.push(`/${this.user}/columns/0`);
+        this.$utils.showSuccessMessage.call(this, publishResult.data);
+        this.$utils.router_push.call(this, `/${this.user}/columns/0`);
       } else {
-        this.$utils.showErrorMessage.call(this, publishResult.data.message);
+        this.$utils.showErrorMessage.call(this, publishResult.data);
       }
     }
   }

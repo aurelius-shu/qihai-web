@@ -126,7 +126,7 @@ export default {
       this.$utils.router_push.call(this, `/${this.user}/manage/articles`);
     },
     edit(article_id) {
-      this.$utils.router_push.call(this, `/${this.user}/editor/${article_id}`);
+      this.$utils.router_push.call(this, `/${this.user}/manage/articles/${article_id}/editor`);
     },
     goColumn(column_id) {
       this.$utils.router_push.call(this, `/${this.user}/columns/${column_id}`);

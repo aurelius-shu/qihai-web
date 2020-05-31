@@ -58,7 +58,7 @@ const columns = [
     scopedSlots: { customRender: "name" }
   },
   {
-    title: "分类",
+    title: "专栏",
     dataIndex: "category"
   },
   {
@@ -100,8 +100,12 @@ export default {
         title: articlesResult.data.articles[i].title,
         category: articlesResult.data.articles[i].column,
         comment: articlesResult.data.articles[i].comment,
-        update_time: articlesResult.data.articles[i].update_time,
-        publish_time: articlesResult.data.articles[i].publish_time
+        update_time: new Date(
+          `${articlesResult.data.articles[i].update_time}Z`
+        ).toLocaleString(),
+        publish_time: new Date(
+          `${articlesResult.data.articles[i].publish_time}Z`
+        ).toLocaleString()
       });
     }
   },
@@ -124,7 +128,10 @@ export default {
       this.selectedRowKeys = selectedRowKeys;
     },
     goArticle(article_id) {
-      this.$router.push(`/${this.user}/manage/articles/${article_id}/editor`);
+      this.$utils.router_push.call(
+        this,
+        `/${this.user}/manage/articles/${article_id}/editor`
+      );
     }
   },
   components: {
