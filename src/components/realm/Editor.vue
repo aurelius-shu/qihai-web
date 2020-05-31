@@ -88,6 +88,9 @@ export default {
       }
     },
     async publishArticle() {
+      // 发布时，先保存文章
+      await this.saveArticle();
+
       this.$http.defaults.baseURL = this.baseUrl;
       const publishResult = await this.$http.get(
         `/realm/${this.user}/manage/articles/${this.article_id}/publish`
