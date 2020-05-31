@@ -47,7 +47,7 @@ export default {
   },
   data: function() {
     return {
-      inputText: this.input
+      content: this.input
     };
   },
   components: {
@@ -55,13 +55,13 @@ export default {
   },
   computed: {
     compiledMarkdown: function() {
-      return marked(this.inputText, { sanitize: true });
+      return marked(this.content, { sanitize: true });
     }
   },
   methods: {
     update: _.debounce(function(e) {
-      this.inputText = e.target.value;
-      this.$emit("updateText", this.inputText);
+      this.content = e.target.value;
+      this.$emit("updateText", this.content);
     }, 300)
   }
 };

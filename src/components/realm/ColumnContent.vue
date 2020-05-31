@@ -10,7 +10,7 @@
                   class="timeago"
                   :datetime="article.publish_time"
                   :timeago-id="article.id"
-                >6 months ago</time>
+                >{{new Date(`${article.publish_time}Z`).toLocaleString()}}</time>
               </a> in
               <a href>{{ article.column }}</a>
             </div>
@@ -19,7 +19,7 @@
             </a>
           </header>
           <a @click="goArticle(article.id)" href>
-            <img class="card-img" :src="baseUrl+article.image" alt />
+            <img class="card-img" :src="baseUrl+article.card" alt />
           </a>
           <div class="card-body">
             <p class="card-text">{{ article.comment }}</p>
@@ -35,7 +35,7 @@
                   class="timeago"
                   :datetime="article.publish_time"
                   :timeago-id="article.id"
-                >6 months ago</time>
+                >{{new Date(`${article.publish_time}Z`).toLocaleString()}}</time>
               </a> in
               <a href>{{ article.column }}</a>
             </div>
@@ -44,7 +44,7 @@
             </a>
           </header>
           <a @click="goArticle(article.id)" href>
-            <img class="card-img" :src="baseUrl+article.image" alt />
+            <img class="card-img" :src="baseUrl+article.card" alt />
           </a>
           <div class="card-body">
             <p class="card-text">{{ article.comment }}</p>
@@ -61,34 +61,36 @@ export default {
   props: {},
   data: function() {
     return {
-      baseUrl: "http://localhost:8000",
+      baseUrl: "",
       user: this.$route.params.username,
-      cid:
-        typeof this.$route.params.cid == "undefined" ||
-        this.$route.params.cid === null
-          ? 0
-          : this.$route.params.cid,
-      imageUrl: "",
+      column_id: 0,
       articles_left: [],
       articles_right: []
     };
   },
-  async beforeMount() {
-    this.$http.defaults.baseURL = this.baseUrl;
-    const articlesResult = await this.$http.get(
-      `/realm/${this.user}/articles/${this.cid}`
-    );
-    for (let i = 0; i < articlesResult.data.length; i++) {
-      if (i % 2 === 0) {
-        this.articles_left.push(articlesResult.data[i]);
-      } else {
-        this.articles_right.push(articlesResult.data[i]);
-      }
+  async mounted() {
+    if (this.$route.params.column_id) {
+      this.column_id = this.$route.params.column_id;
     }
+    this.baseUrl = this.$utils.baseUrl.call(this);
+    await this.refreshArticles(1);
   },
   methods: {
-    goArticle(aid) {
-      this.$router.push(`/${this.user}/article/${aid}`);
+    goArticle(article_id) {
+      this.$router.push(`/${this.user}/articles/${article_id}`);
+    },
+    async refreshArticles(page_index) {
+      this.$http.defaults.baseURL = this.baseUrl;
+      const articlesResult = await this.$http.get(
+        `/realm/${this.user}/columns/${this.column_id}/articles/1`
+      );
+      for (let i = 0; i < articlesResult.data.articles.length; i++) {
+        if (i % 2 === 0) {
+          this.articles_left.push(articlesResult.data.articles[i]);
+        } else {
+          this.articles_right.push(articlesResult.data.articles[i]);
+        }
+      }
     }
   }
 };

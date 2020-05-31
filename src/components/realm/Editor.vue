@@ -17,14 +17,14 @@
         </svg>
       </a>
       <div class="article-title-input-box">
-        <input v-model="title" class="article-title-input" placeholder="输入文章标题" />
+        <input v-model="article.title" class="article-title-input" placeholder="输入文章标题" />
       </div>
 
       <button class="btn btn-outline-dark" @click="saveArticle">保存草稿</button>
       <button class="btn btn-secondary" @click="publishArticle">发布文章</button>
     </div>
 
-    <Markdown :input="inputText" @updateText="updateText"></Markdown>
+    <Markdown :input="article.content" @updateText="updateText"></Markdown>
   </div>
 </template>
 
@@ -39,37 +39,46 @@ export default {
     return {
       baseUrl: "",
       user: this.$route.params.username,
-      aid: this.$route.params.aid,
-      title: "",
-      inputText: "# Hello",
-      image_md5_key: ""
+      article_id: 0,
+      article: {
+        title: "",
+        content: "# Hello",
+        card: ""
+      }
     };
   },
-  beforeMount() {
-    this.baseUrl = "http://127.0.0.1:8000";
-    this.image_md5_key = "73831253f3d3521659d137b818535d1b";
+  async mounted() {
+    this.baseUrl = this.$utils.baseUrl.call(this);
+    if (this.$route.params.article_id) {
+      this.article_id = this.$route.params.article_id;
+    }
+
+    await this.init_article(this.article_id);
+    // this.image_md5_key = "73831253f3d3521659d137b818535d1b";
   },
   methods: {
     updateText(text) {
-      this.inputText = text;
+      this.article.content = text;
     },
     manage_articles() {
-      this.$router.push(`/${this.user}/article/manage`);
+      this.$router.push(`/${this.user}/manage/articles`);
+    },
+    async init_article(article_id) {
+      this.$http.defaults.baseURL = this.baseUrl;
+      const articleDetail = await this.$http.get(
+        `${this.baseUrl}/realm/${this.user}/articles/${this.article_id}`
+      );
+      this.article = articleDetail.data;
     },
     async saveArticle() {
       this.$http.defaults.baseURL = this.baseUrl;
       const saveResult = await this.$http.post(
         `/realm/${this.user}/articles/save`,
-        {
-          aid: this.aid,
-          title: this.title,
-          content: this.inputText,
-          image_md5_key: this.image_md5_key
-        }
+        article
       );
-      if (saveResult.data.is_succeed) {
+      if (saveResult.data) {
         this.$utils.showSuccessMessage.call(this, saveResult.data.message);
-        this.aid = saveResult.data.aid;
+        this.article_id = saveResult.data.article_id;
       } else {
         this.$utils.showErrorMessage.call(this, saveResult.data.message);
       }
@@ -77,11 +86,11 @@ export default {
     async publishArticle() {
       this.$http.defaults.baseURL = this.baseUrl;
       const publishResult = await this.$http.get(
-        `/realm/${this.user}/articles/publish/${this.aid}`
+        `/realm/${this.user}/manage/articles/${this.article_id}/publish`
       );
-      if (publishResult.data.is_succeed) {
+      if (publishResult.data) {
         this.$utils.showSuccessMessage.call(this, publishResult.data.message);
-        this.$router.push(`/${this.user}/column/0`);
+        this.$router.push(`/${this.user}/columns/0`);
       } else {
         this.$utils.showErrorMessage.call(this, publishResult.data.message);
       }

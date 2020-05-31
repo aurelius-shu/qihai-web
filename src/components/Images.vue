@@ -28,23 +28,23 @@ export default {
     return {
       baseUrl: "",
       uploadImageAction: "",
-      upload_info: { upload_user: "aurelius" },
+      upload_info: { upload_user: this.$route.params.username },
       fileList: []
     };
   },
-  async beforeMount() {
-    this.baseUrl = "http://127.0.0.1:8000";
-    this.uploadImageAction = `${this.baseUrl}/realm/${this.upload_info.upload_user}/images/upload`;
+  async mounted() {
+    this.baseUrl = this.$utils.baseUrl.call(this);
+    this.uploadImageAction = `${this.baseUrl}/realm/${this.upload_info.upload_user}/manage/images`;
 
     const images = await this.getImages(this.upload_info.upload_user);
     for (let i = 0; i < images.data.length; i++) {
       let image = images.data[i];
       this.fileList.push({
-        uid: image.uid,
-        name: image.name,
+        uid: image.id,
+        name: image.filename,
         status: "done",
-        url: `${this.baseUrl}${image.url}`,
-        thumbUrl: `${this.baseUrl}${image.url}`
+        url: `${this.baseUrl}${image.image}`,
+        thumbUrl: `${this.baseUrl}${image.image}`
       });
     }
   },
@@ -87,11 +87,11 @@ export default {
     },
     getImages(username) {
       this.$http.defaults.baseURL = `${this.baseUrl}/realm/`;
-      return this.$http.get(`/${username}/images`);
+      return this.$http.get(`/${username}/manage/images`);
     },
-    removeImages(username, uid) {
+    removeImages(username, image_id) {
       this.$http.defaults.baseURL = `${this.baseUrl}/realm/`;
-      return this.$http.get(`/${username}/images/remove/${uid}`);
+      return this.$http.get(`/${username}/images/${image_id}/remove`);
     }
   }
 };

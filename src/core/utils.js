@@ -1,7 +1,14 @@
 "use strict";
 
 const utils = {
-  showMessage: function(type, message, description, duration) {
+  baseUrl() {
+    return "http://localhost:8000";
+  }, router_push(path) {
+    if (this.$route.path != path) {
+      this.$router.push(path);
+    }
+  },
+  showMessage(type, message, description, duration) {
     this.$notification[type]({
       message: message,
       description: description,
@@ -21,6 +28,7 @@ const utils = {
   showErrorMessage(description, duration = 3) {
     this.$utils.showMessage.call(this, "error", "错误", description, duration);
   },
+
 };
 
 export default utils;

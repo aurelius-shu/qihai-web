@@ -64,15 +64,15 @@ export default {
     };
   },
   async beforeMount() {
-    this.baseUrl = "http://127.0.0.1:8000";
+    this.baseUrl = this.$utils.baseUrl.call(this);
 
     this.$http.defaults.baseURL = this.baseUrl;
     const columnsResult = await this.$http.get(`/realm/${this.user}/columns`);
     this.columns = columnsResult.data;
   },
   methods: {
-    goColumn(key) {
-      this.$router.push(`/${this.user}/column/${key}`);
+    goColumn(column_id) {
+      this.$utils.router_push.call(this, `/${this.user}/columns/${column_id}`);
     }
   }
 };

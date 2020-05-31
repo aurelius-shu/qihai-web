@@ -88,20 +88,20 @@ export default {
     };
   },
   async mounted() {
-    this.baseUrl = "http://localhost:8000";
+    this.baseUrl = this.$utils.baseUrl.call(this);
     this.$http.defaults.baseURL = this.baseUrl;
     const articlesResult = await this.$http.get(
-      `/realm/${this.user}/articles/0`
+      `/realm/${this.user}/manage/articles/1`
     );
-    for (let i = 0; i < articlesResult.data.length; i++) {
+    for (let i = 0; i < articlesResult.data.articles.length; i++) {
       this.data.push({
-        key: articlesResult.data[i].id,
-        avatar: `${this.baseUrl}${articlesResult.data[i].image}`,
-        title: articlesResult.data[i].title,
-        category: articlesResult.data[i].column,
-        comment: articlesResult.data[i].comment,
-        update_time: articlesResult.data[i].update_time,
-        publish_time: articlesResult.data[i].publish_time
+        key: articlesResult.data.articles[i].id,
+        avatar: `${this.baseUrl}${articlesResult.data.articles[i].card}`,
+        title: articlesResult.data.articles[i].title,
+        category: articlesResult.data.articles[i].column,
+        comment: articlesResult.data.articles[i].comment,
+        update_time: articlesResult.data.articles[i].update_time,
+        publish_time: articlesResult.data.articles[i].publish_time
       });
     }
   },
@@ -124,7 +124,7 @@ export default {
       this.selectedRowKeys = selectedRowKeys;
     },
     goArticle(article_id) {
-      this.$router.push(`/${this.user}/editor/${article_id}`);
+      this.$router.push(`/${this.user}/manage/articles/${article_id}/editor`);
     }
   },
   components: {

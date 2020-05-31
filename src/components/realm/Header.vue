@@ -114,8 +114,8 @@ export default {
       columns: []
     };
   },
-  async beforeMount() {
-    this.baseUrl = "http://localhost:8000";
+  async mounted() {
+    this.baseUrl = this.$utils.baseUrl.call(this);
     this.avatar = `${this.baseUrl}/media/realm/2d8bd71b96612e7caf4ee4d79a474b39.png`;
     this.$http.defaults.baseURL = this.baseUrl;
     const columnsResult = await this.$http.get(`/realm/${this.user}/columns`);
@@ -123,13 +123,13 @@ export default {
   },
   methods: {
     manage_articles() {
-      this.$router.push(`/${this.user}/article/manage`);
+      this.$utils.router_push.call(this, `/${this.user}/manage/articles`);
     },
-    edit(aid) {
-      this.$router.push(`/${this.user}/editor/${aid}`);
+    edit(article_id) {
+      this.$utils.router_push.call(this, `/${this.user}/editor/${article_id}`);
     },
-    goColumn(cid) {
-      this.$router.push(`/${this.user}/column/${cid}`);
+    goColumn(column_id) {
+      this.$utils.router_push.call(this, `/${this.user}/columns/${column_id}`);
     }
   }
 };

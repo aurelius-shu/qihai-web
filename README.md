@@ -42,3 +42,6 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
     - 后台文章列表
     - 后台文章编辑
 2. 栏目
+3. 文章
+    - 阅读数
+    - 文章评论

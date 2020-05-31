@@ -3,17 +3,17 @@
     <article class="card mb-4">
       <header class="card-header text-center">
         <div class="card-meta">
-          <a href="#">
-            <time class="timeago" :datetime="createTime" timeago-id="1">{{ timeage }}</time>
-          </a> in
-          <a href="#">{{ address }}</a>
+          <a>
+            <time class="timeago" :datetime="publish_time" timeago-id="1">{{ publish_time }}</time>
+          </a> -
+          <a>{{ article.column }}</a>
         </div>
-        <a href="#">
-          <h1 class="card-title">{{ title }}</h1>
+        <a>
+          <h1 class="card-title">{{ article.title }}</h1>
         </a>
       </header>
-      <a href="#">
-        <img class="card-img" :src="image" alt />
+      <a>
+        <img class="card-img" :src="baseUrl+article.card" alt />
       </a>
       <div class="card-body">
         <div class="md-html" v-html="compiledMarkdown"></div>
@@ -224,39 +224,36 @@ export default {
     return {
       baseUrl: "",
       user: this.$route.params.username,
-      aid: "1",
-
-      createTime: "",
-      timeage: "",
-      address: "",
-      title: "",
-      image: "",
-      content: ""
+      article_id: "0",
+      article: {}
     };
   },
   props: {},
   computed: {
     compiledMarkdown: function() {
-      return marked(this.content);
+      if (this.article.content) {
+        return marked(this.article.content);
+      }
+    },
+    publish_time: function() {
+      return new Date(`${this.article.publish_time}Z`).toLocaleString();
     }
   },
-  async beforeMount() {
-    this.baseUrl = "http://127.0.0.1:8000";
+  async mounted() {
+    this.baseUrl = this.$utils.baseUrl.call(this);
+    if (this.$route.params.article_id) {
+      this.article_id = this.$route.params.article_id;
+    }
 
-    this.$http.defaults.baseURL = this.baseUrl;
-    const articleDetail = await this.$http.get(
-      `${this.baseUrl}/realm/${this.user}/articles/detail/${this.aid}`
-    );
-    if (articleDetail.data.is_succeed) {
-      this.createTime = articleDetail.data.data.createTime;
-      // this.timeage = articleDetail.data.data.
-      this.timeage = "3 days ago";
-      this.address = "深圳";
-      this.title = articleDetail.data.data.title;
-      this.image = `${this.baseUrl}${articleDetail.data.data.image}`;
-      this.content = articleDetail.data.data.content;
-    } else {
-      this.$utils.showErrorMessage.call(this, articleDetail.data);
+    await this.refresh_articles();
+  },
+  methods: {
+    async refresh_articles() {
+      this.$http.defaults.baseURL = this.baseUrl;
+      const articleDetail = await this.$http.get(
+        `${this.baseUrl}/realm/${this.user}/articles/${this.article_id}`
+      );
+      this.article = articleDetail.data;
     }
   }
 };

@@ -4,28 +4,39 @@ import Article from "./components/realm/Article";
 import Editor from "./components/realm/Editor";
 
 const routers = [
-  // {
-  //   path: "/:username",
-  //   name: "index",
-  //   component: Column,
-  // },
+
+  // columns
   {
-    path: "/:username/column/:cid",
-    name: "column",
+    path: "/:username",
+    name: "index",
     component: Column,
   },
   {
-    path: '/:username/article/manage',
+    path: "/:username/columns/",
+    name: "column_default",
+    component: Column,
+  },
+  {
+    path: "/:username/columns/:column_id",
+    name: "column",
+    component: Column,
+  },
+
+  // articles
+  {
+    path: "/:username/articles/:article_id",
+    name: "article",
+    component: Article,
+  },
+  // manage
+  // list
+  {
+    path: '/:username/manage/articles',
     name: 'manage_article',
     component: ManageArticle,
   },
   {
-    path: "/:username/article/:aid",
-    name: "article",
-    component: Article,
-  },
-  {
-    path: "/:username/editor/:aid",
+    path: "/:username/manage/articles/:article_id/editor",
     name: "editor",
     component: Editor,
   },
